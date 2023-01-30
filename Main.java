@@ -1,5 +1,6 @@
 import java.io.Console;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.ListIterator;
 
@@ -28,12 +29,14 @@ public class Main {
         tiempos = new long[REPETICIONES];
 
         // -----------------------Pruebas de inserción------------------------
-        // Se insertará en cada una de las listas tantos elementos (números enteros) como su tamaño.
+        // Se insertará en cada una de las listas tantos elementos (números enteros)
+        // como su tamaño.
         // Pruebas: inserciones en ArrayList
         for (int i = 0; i < REPETICIONES; i++)
-            tiempos[i] = medirInserciones(inicioTimer, finTimer, arrList, SIZE);
+            tiempos[i] = Herramientas.medirInserciones(arrList, SIZE);
         // //calcular la media
-        media = media(tiempos, REPETICIONES);
+        media = Herramientas.media(tiempos, REPETICIONES);
+        tiempos = new long[REPETICIONES];
         // reporte:
         System.out.println(
                 "ArrayList - Media calculada al realizar " + SIZE + " inserciones " + REPETICIONES + " veces: " + media
@@ -41,9 +44,10 @@ public class Main {
 
         // Pruebas: inserciones en Linked List
         for (int i = 0; i < REPETICIONES; i++)
-            tiempos[i] = medirInserciones(inicioTimer, finTimer, linList, SIZE);
+            tiempos[i] = Herramientas.medirInserciones(linList, SIZE);
         // // calcular media
-        media = media(tiempos, REPETICIONES);
+        media = Herramientas.media(tiempos, REPETICIONES);
+        tiempos = new long[REPETICIONES];
         // reporte:
         System.out.println(
                 "LinkedList - Media calculada al realizar " + SIZE + " inserciones " + REPETICIONES + " veces: " + media
@@ -51,59 +55,27 @@ public class Main {
         // -------------------------------------------------------------------
 
         // -------------------------Pruebas de acceso-------------------------
+        // Recorreremos cada lista desde el final al principio.
+        // Pruebas: Acceso inverso en ArrayList
 
-        ListIterator<Integer> iterador = linList.listIterator();
-        while (iterador.hasNext())
-            iterador.next();
+        for (int i = 0; i < REPETICIONES; i++)
+            tiempos[i] = Herramientas.medirAccesos(arrList, SIZE);
+        // // calcular media
+        media = Herramientas.media(tiempos, REPETICIONES);
+        tiempos = new long[REPETICIONES];
+        // reporte:
+        System.out.println("ArrayList - Media calculada al realizar " + SIZE + " accesos " + REPETICIONES + " veces: "
+                + media + " nanosegundos.");
 
-        inicioTimer = System.nanoTime();
-        while (iterador.hasPrevious())
-            iterador.previous();
-        finTimer = System.nanoTime();
-        System.out.println("Acceso inverso Linked List = " + (finTimer - inicioTimer) + " nanosegundos.");
+        // Pruebas: Acceso inverso en LinkedList
+
+        for (int i = 0; i < REPETICIONES; i++)
+            tiempos[i] = Herramientas.medirAccesos(linList, SIZE);
+        // // calcular media
+        media = Herramientas.media(tiempos, REPETICIONES);
+        tiempos = new long[REPETICIONES];
+        // reporte:
+        System.out.println("LinkedList - Media calculada al realizar " + SIZE + " accesos " + REPETICIONES + " veces: "
+                + media + " nanosegundos.");
     }
-    private static double medirAccesos(){
-        return (Double) null;
-    }
-
-    private static void accesosInverso(ArrayList<Integer> arr, int size){
-        for (int i=size ; i>=0 ; i--){
-            arr.get(i);
-        }
-    }
-
-    private static long medirInserciones(long inicioTimer, long finTimer, ArrayList<Integer> arrList, int size) {
-        inicioTimer = System.nanoTime();
-        inserciones(arrList, size);
-        finTimer = System.nanoTime();
-        return (finTimer - inicioTimer);
-    }
-
-    private static double media(long[] tiempos, int repeticiones) {
-        long tiempoAcumulado = 0;
-        for (int i = 0; i < repeticiones; i++) {
-            tiempoAcumulado = tiempoAcumulado + tiempos[i];
-        }
-        return ((1f * tiempoAcumulado) / repeticiones);
-    }
-
-    private static long medirInserciones(long inicioTimer, long finTimer, LinkedList<Integer> lList, int size) {
-        inicioTimer = System.nanoTime();
-        inserciones(lList, size);
-        finTimer = System.nanoTime();
-        return (finTimer - inicioTimer);
-    }
-
-    private static void inserciones(ArrayList<Integer> arr, int size) {
-        for (int i = 0; i < size; i++) {
-            arr.add(i);
-        }
-    }
-
-    private static void inserciones(LinkedList<Integer> lList, int size) {
-        for (int i = 0; i < size; i++) {
-            lList.add(i);
-        }
-    }
-
 }
