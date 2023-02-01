@@ -1,5 +1,6 @@
 import java.io.Console;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.ListIterator;
@@ -32,6 +33,7 @@ public class Main {
         // Se insertará en cada una de las listas tantos elementos (números enteros)
         // como su tamaño.
         // Pruebas: inserciones en ArrayList
+        System.out.println("__________INSERCIONES__________");
         for (int i = 0; i < REPETICIONES; i++)
             tiempos[i] = Herramientas.medirInserciones(arrList, SIZE);
         // //calcular la media
@@ -56,19 +58,18 @@ public class Main {
 
         // -------------------------Pruebas de acceso-------------------------
         // Recorreremos cada lista desde el final al principio.
-        // Pruebas: Acceso inverso en ArrayList
-
+        // Pruebas: Acceso en sentido inverso con ArrayList
+        System.out.println("__________ACCESOS__________");
         for (int i = 0; i < REPETICIONES; i++)
             tiempos[i] = Herramientas.medirAccesos(arrList, SIZE);
-        // // calcular media
+        // // calcular media:
         media = Herramientas.media(tiempos, REPETICIONES);
         tiempos = new long[REPETICIONES];
         // reporte:
         System.out.println("ArrayList - Media calculada al realizar " + SIZE + " accesos " + REPETICIONES + " veces: "
                 + media + " nanosegundos.");
 
-        // Pruebas: Acceso inverso en LinkedList
-
+        // Pruebas: Acceso en sentido inverso con LinkedList
         for (int i = 0; i < REPETICIONES; i++)
             tiempos[i] = Herramientas.medirAccesos(linList, SIZE);
         // // calcular media
@@ -77,5 +78,37 @@ public class Main {
         // reporte:
         System.out.println("LinkedList - Media calculada al realizar " + SIZE + " accesos " + REPETICIONES + " veces: "
                 + media + " nanosegundos.");
+        // -------------------------------------------------------------------
+
+        // -------------------------Prueba contains()-------------------------
+        // Comprobar (contains()) que contiene todos los elementos.
+        // Para esta prueba utilizaremos un valor incremental para cada iteración, que
+        // es el elemento que debería haber en cada iteración.
+
+        // Pruebas: contains() en con ArrayList
+        System.out.println("__________contains()__________");
+        for (int i = 0; i < REPETICIONES; i++) {
+            tiempos[i] = Herramientas.pruebaContains(arrList);
+        }
+        // // calcular media
+        media = Herramientas.media(tiempos, REPETICIONES);
+        tiempos = new long[REPETICIONES];
+        // reporte:
+        System.out.println("ArrayList - Media calculada al ejecutar contains() de todos los elementos " + REPETICIONES
+                + " veces: " + media + " nanosegundos.");
+
+        // Pruebas: contains() en con LinkedList
+        System.out.println("__________contains()__________");
+        for (int i = 0; i < REPETICIONES; i++) {
+            tiempos[i] = Herramientas.pruebaContains(linList);
+        }
+        // // calcular media
+        media = Herramientas.media(tiempos, REPETICIONES);
+        tiempos = new long[REPETICIONES];
+        // reporte:
+        System.out.println("LinkedList - Media calculada al ejecutar contains() de todos los elementos " + REPETICIONES
+                + " veces: " + media + " nanosegundos.");
+
+        
     }
 }
